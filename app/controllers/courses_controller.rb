@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
     def show
         begin
             book = Course.find(params[:id])
-            render json: {status: "sucess", message: "Fetched successfully", data: book}, :status => :ok    
+            render json: {status: "Success", message: "Fetched successfully", data: book}, :status => :ok    
         rescue => exception
             render json: {message: exception, status_code: 404}, :status => :not_found    
         end
