@@ -1,10 +1,10 @@
 class CoursesController < ApplicationController
-    before_action :authorize_request 
-    # except: [:index, :show]
+    before_action :authorize_request,    except: [:index, :show]
+  
 
     # Fetch all
     def index
-        books = Course.all
+        books = Course.all().joins(:user).select(:title, :description, :created_at, :user_id, :id).reverse_order
         render json: {status: "sucess", message: "Fetched successfully", data: books}, :status => :ok    
     end
 
@@ -20,9 +20,15 @@ class CoursesController < ApplicationController
 
 # Create one
     def create
+        user_id =  @current_user[:id]
+        title = book_params[:title]
+        description = book_params[:description]
         begin
-            book = Course.new(book_params)
-            if book.save
+            book = Course.new()
+            book.title = title
+            book.description = description
+            book.user_id = user_id
+            if book.save()
             render json: {
                 status: "Sucess", 
                 status_code: 201,

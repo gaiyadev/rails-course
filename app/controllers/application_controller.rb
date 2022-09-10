@@ -8,6 +8,7 @@ class ApplicationController < ActionController::API
     #   Decode token
     def decode_token(token)
         decoded = JWT.decode(token, ENV['JWT_SECRET'])[0]
+        puts decoded
         HashWithIndifferentAccess.new decoded
     end
     
@@ -17,10 +18,10 @@ class ApplicationController < ActionController::API
         header = header.split(' ').last if header
 
         begin
-          decoded = decode_token(header)
-           id =  decoded[:data][:user_id]
+          @decoded = decode_token(header)
+           id =  @decoded[:user_id]
            @current_user = User.find(id)
-           return @current_user
+           puts @current_user
         rescue ActiveRecord::RecordNotFound => e
           render json: { message: e.message, status_code: 401 }, status: :unauthorized
         rescue JWT::DecodeError => e
