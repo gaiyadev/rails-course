@@ -12,11 +12,11 @@ default: &default
 development:
   <<: *default
   # database: db/development.sqlite3
-  database: ruby-course
+  database: <%= ENV['DATABASE_NAME'] %>
   encoding: unicode
-  host: localhost
-  username: postgres
-  password: postgres
+  host: <%= ENV['DATABASE_HOST'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

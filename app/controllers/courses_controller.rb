@@ -1,4 +1,7 @@
 class CoursesController < ApplicationController
+    before_action :authorize_request 
+    # except: [:index, :show]
+
     # Fetch all
     def index
         books = Course.all

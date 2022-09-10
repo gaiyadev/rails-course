@@ -20,4 +20,6 @@ class Course < ApplicationRecord
         minimum: 3, 
         too_short: "description is too short" 
     }
+    # belongs_to :user
+
 end
